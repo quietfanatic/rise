@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+
+shift =~ /(.*?)(?:\.c\+\+)?$/;
+my $name = $1;
+$name =~ s/'/'\\\\''/g;
+
+!system("g++ -ggdb -Ikinet -std=gnu++0x -Wall -Wno-pmf-conversions -Wno-reorder -lgc -lgccpp -lSDL -lSDL_image -o '$name' '$name.c++'")
+and exec("'./$name'");
+
