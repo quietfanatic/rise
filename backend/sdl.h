@@ -62,7 +62,7 @@ struct Color : gc {
 	};
 #endif
 	Color (uint32 hex)
-		:r(hex / 65536), g(hex / 255), b(hex), a(255) { }
+		:r(hex / 65536 % 255), g(hex / 255 % 255), b(hex % 255), a(255) { }
 	Color (uint8 r_, uint8 g_, uint8 b_)
 		:r(r_), g(g_), b(b_), a(0xff) { }
 	Color (uint8 r_, uint8 g_, uint8 b_, uint8 a_)
@@ -96,7 +96,7 @@ void quit_backend () {
  // Timing
 void delay (Time t) {
 	if (t < 0*T) {
-	//	printf("Cannot go back in time!\n");
+		//printf("Cannot go back in time!\n");
 		return;
 	}
 	SDL_Delay(t*1000/T);
@@ -106,6 +106,7 @@ uint start_ticks;
 void start_timer() {
 	start_ticks = SDL_GetTicks();
 }
+
 
 void delay_to (Time t) {
 	uint ticks = SDL_GetTicks();
@@ -123,6 +124,8 @@ void get_input () {
 			case SDL_KEYDOWN: {
 				if (input.key.keysym.sym == SDLK_ESCAPE)
 					exit(0);
+				else if (input.key.keysym.sym == SDLK_INSERT)
+					dump_event_list();
 				break;
 			}
 			case SDL_KEYUP: {

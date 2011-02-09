@@ -8,11 +8,20 @@ struct Interaction {
 	Time t;
 	interaction_callback call;
 };
- // Give a little syntax sugar.
-template <class A, class B>
-inline Interaction operator >> (Time t, void (*f)(A*, B*)) {
-	return {t, reinterpret_cast<interaction_callback>(f)};
+
+ // Convert callbacks to generic form
+template <class A, class B, void(&f)(A*, B*)>
+void interact_callback_convert (Object* a, Object* b) {
+	f(static_cast<A*>(a), static_cast<B*>(b));
 }
+ // Template to use callback converter
+ // This syntax is extremely ugly and I wish it could be fixed
+ // without a performance hit, but our language has...limitations.
+template <class A, class B, void(&f)(A*, B*)>
+static inline Interaction interact (Time t) {
+	return {t, interact_callback_convert<A, B, f>};
+}
+
 #define nointeraction ((Interaction){NAN*T, NULL})
  // Type of (dynamic) interaction function
 typedef Interaction (*interaction_f)(Object*, Object*);

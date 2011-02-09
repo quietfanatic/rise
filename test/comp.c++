@@ -1,6 +1,5 @@
 
-#include "rise.h"
-#include "interactions.c++"
+#include "rise.c++"
 
 int main () {
 	return 0;

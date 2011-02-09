@@ -29,7 +29,7 @@ struct LL {
 		if (other) link_after(other);
 		other = realthis();
 	}
-	void replace_sort_forward (C*& other, bool (&cmp)(C*, C*)) {
+	void replace_sort_forward (C*& other, bool (*cmp)(C*, C*)) {
 		if (!other) { other = realthis(); return; }
 		if (cmp(realthis(), other)) {
 			link_before(other);
@@ -46,7 +46,7 @@ struct LL {
 		prev = o;
 		o->next = realthis();
 	}
-	void replace_sort_backward (C*& other, bool (&cmp)(C*, C*)) {
+	void replace_sort_backward (C*& other, bool (*cmp)(C*, C*)) {
 		if (!other) { other = realthis(); return; }
 		if (cmp(realthis(), other)) {
 			link_after(other);

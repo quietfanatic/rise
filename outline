@@ -1,0 +1,55 @@
+
+
+
+
+
+
+Here is the mechanics of the engine:
+
+When an object is created, it has no future.
+It checks for interactions will all other objects, and if there is one it makes
+that interaction its future and the other object's future.  It then puts that
+interaction into the global event queue.   If the other object already had a
+future, then that future is cancelled.  If that future referenced yet another
+object, that object checks for interactions.
+Whenever an interaction occurs, both objects involved in the interaction check
+for new interactions.
+
+
+On creating object:
+	other = earliest object to interact with
+	if other has a future:
+		take the future off of other
+		cancel the future
+	make object's future this interaction
+	make other's future this interaction
+	put future into event queue
+
+On cancelling event:
+	take event out of event queue.
+	if object a's future is this:
+		take future off of a
+		check for interactions on a
+	if object b's future is this and a isn't b:
+		take future off of b
+		check for interactions on b
+
+On executing event:
+	shift event off of event queue
+	execute event's interaction callback
+	take future off of a
+	take future off of b
+	check for interactions on a
+	if b isn't a and b doesn't have a new future already:
+		check for interactions on b
+
+
+
+
+
+
+
+
+
+
+

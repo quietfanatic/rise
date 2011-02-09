@@ -11,7 +11,7 @@ struct Vec2 {
 
  // negate
 template <class C> static inline
-auto operator - (Vec2<C> a)->Vec2<decltype(-a.x, -a.y)>
+auto operator - (Vec2<C> a)->Vec2<decltype(-a.x)>
                                  { return {-a.x, -a.y}; }
  // addition with vector
 template <class A, class B> static inline
@@ -49,3 +49,11 @@ template <class A, class B> static inline
 bool operator == (Vec2<A> a, Vec2<B> b) { return a.x == b.x && a.y == b.y; }
 template <class A, class B> static inline
 bool operator != (Vec2<A> a, Vec2<B> b) { return a.x != b.x || a.y != b.y; }
+
+
+ // Some nice preset vectors
+#define RIGHT ((Vec2<>){+1,0})
+#define DOWN ((Vec2<>){0,+1})
+#define LEFT ((Vec2<>){-1,0})
+#define UP ((Vec2<>){0,-1})
+#define NILVEC ((Vec2<>){0, 0})
