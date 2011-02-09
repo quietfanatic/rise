@@ -8,7 +8,7 @@ struct Event : gc, LL<Event>, Interaction {
 	Object* a;
 	Object* b;
 	void happen ();
-	void cancel ();
+//	void cancel (Object* froma, Object* fromb);
 	void schedule ();
 	void unschedule ();
 };

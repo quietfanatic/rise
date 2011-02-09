@@ -15,18 +15,17 @@
 		if (a != b)
 			check_interactions(b);
 	}
-	void Event::cancel () {
+	/*void Event::cancel (Object* froma, Object* fromb) {
 		unschedule();
-		if (a->future == this) {
+		if (a != froma && a != fromb) {
 			a->future = NULL;
 			check_interactions(a);
-			if (a == b) return;
 		}
-		if (b->future == this) {
+		if (b != froma && b != fromb) {
 			b->future = NULL;
 			check_interactions(b);
 		}
-	}
+	}*/
 	static bool cmp_events(Event* a, Event* b) { return a->t < b->t; }
 	inline void Event::schedule () {
 		replace_sort_forward(current_event, &cmp_events);
@@ -40,14 +39,16 @@
 
 void check_interactions(Object* a) {
 	Object* picked = NULL;
-	a->future = new Event;
-	a->future->t = INF*T;
-	a->future->a = a->future->b = a;
+	Event* newfuture = new Event;
+	newfuture->t = INF*T;
 	for (Object* b = first_object; b; b = b->next) {
+		Time time_limit = newfuture->t;
+		if (b->future && b->future->t < time_limit)
+			time_limit = b->future->t;
 		Interaction i;
 		bool flip;  // Reverse arguments to callback?
-		int aid = a->icid();
-		int bid = b->icid();
+		ICID aid = a->icid();
+		ICID bid = b->icid();
 		if (ITX_LOOKUP(aid, bid)) {
 			i = (*ITX_LOOKUP(aid, bid))(a, b);
 			flip = false;
@@ -57,10 +58,11 @@ void check_interactions(Object* a) {
 			flip = true;
 		}
 		else continue;
-		 // Only pick if it's earlier than both prior futures
-		if (i.t >= now - EVENT_BACKWARD_TOLERANCE && i.t < a->future->t
-		 && (!b->future || i.t < b->future->t)) {
-			 // Reject event if its too soon of a repeat
+		 // Only pick if it's earlier than our time limit
+		 // and (approximately) later than now.
+		if (i.t >= now - EVENT_BACKWARD_TOLERANCE
+		 && i.t < time_limit) {
+			 // But reject it if its too soon of a repeat
 			if (i.t < now+EVENT_REPEAT_INTERVAL)
 				for (Event* e = current_event; e && e->t > i.t - EVENT_REPEAT_INTERVAL; e = e->prev)
 					if ((e->a == a && e->b == b)
@@ -68,29 +70,38 @@ void check_interactions(Object* a) {
 					if (e->call == i.call)
 						goto nope;
 			picked = b;
-			a->future->t = i.t;
-			a->future->call = i.call;
+			newfuture->t = i.t;
+			newfuture->call = i.call;
 			if (flip) {
-				a->future->a = b;
-				a->future->b = a;
+				newfuture->a = b;
+				newfuture->b = a;
 			} else {
-				a->future->a = a;
-				a->future->b = b;
+				newfuture->a = a;
+				newfuture->b = b;
 			}
 		}
 		nope: ;
 	}
 	if (picked) {
-		if (a->future != picked->future && picked->future != NULL) {
-			Event* e = picked->future;
-			picked->future = NULL;
-			e->cancel();
+		Event* of = picked->future;
+
+		a->future = newfuture;
+		picked->future = newfuture;
+		newfuture->schedule();
+
+		if (of != NULL) {
+			 // Cancel the other object's future.
+			 // And recalculate other futures if needed.
+			of->unschedule();
+			if (of->a != a && of->a != picked) {
+				of->a->future = NULL;
+				return check_interactions(of->a);
+			}
+			if (of->b != a && of->b != picked) {
+				of->b->future = NULL;
+				return check_interactions(of->b);
+			}
 		}
-		picked->future = a->future;
-		a->future->schedule();
-	}
-	else {
-		a->future = NULL;
 	}
 }
 

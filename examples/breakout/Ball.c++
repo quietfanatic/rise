@@ -20,20 +20,27 @@ struct Ball : public LinearRect {
 add_IC(Ball)
 
 
-inline void bounce_x (Ball* ball, Room* room) {
+inline void bounce_x (Ball* ball, Object* room) {
 	ball->keyvel.x = -ball->keyvel.x;
 }
 inline void bounce_x (Ball* ball, Brick* brick) {
 	ball->keyvel.x = -ball->keyvel.x;
 	brick->destroy();
 }
-inline void bounce_y (Ball* ball, Room* room) {
+inline void bounce_y (Ball* ball, Object* room) {
 	ball->keyvel.y = -ball->keyvel.y;
 }
 inline void bounce_y (Ball* ball, Brick* brick) {
 	ball->keyvel.y = -ball->keyvel.y;
 	brick->destroy();
 }
+inline void bounce_paddle (Ball* ball, Paddle* paddle) {
+	ball->keyvel.y = -ball->keyvel.y;
+	ball->keyvel.x += (ball->keypos.x - paddle->keypos.x) / (0.2*T);
+	if (ball->keyvel.x > 240*D/T) ball->keyvel.x = 240*D/T;
+	if (ball->keyvel.x < -240*D/T) ball->keyvel.x = -240*D/T;
+}
+
 static inline Interaction interaction(Ball* ball, Brick* brick) {
 	Vec2<> dir = collision_direction(ball, brick);
 	Time t = time_to_collide(ball, brick);
@@ -44,14 +51,17 @@ static inline Interaction interaction(Ball* ball, Brick* brick) {
 static inline Interaction interaction(Ball* ball, Room* room) {
 	Vec2<> dir = collision_direction(ball, room);
 	Time t = time_to_collide(ball, room);
-	if (dir.x) return interact<Ball, Room, bounce_x>(t);
-	if (dir.y) return interact<Ball, Room, bounce_y>(t);
+	if (dir.x) return interact<Ball, Object, bounce_x>(t);
+	if (dir.y) return interact<Ball, Object, bounce_y>(t);
 	return nointeraction;
+}
+static inline Interaction interaction(Ball* ball, Paddle* paddle) {
+	return interact<Ball, Paddle, bounce_paddle>(time_to_collide(ball, paddle));
 }
 
 add_interaction(Ball, Brick)
 add_interaction(Ball, Room)
-
+add_interaction(Ball, Paddle)
 
 
 

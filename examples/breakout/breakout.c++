@@ -1,3 +1,7 @@
+//#include "gc/gc.h"
+//#include "gc/gc_cpp.h"
+//bool _begin () { GC_enable_incremental(); return true; }
+//bool _begun = _begin();
 
 #include "rise.c++"
 #include "Room.c++"
