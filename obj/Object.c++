@@ -25,6 +25,7 @@
 	 // Called automatically to update object before events
 	void Object::update () { }
 
+
 	Object::Object () { }  // hate constructors HATE
 //};
 

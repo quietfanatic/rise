@@ -58,13 +58,15 @@ void check_interactions(Object* a) {
 		}
 		else continue;
 		 // Only pick if it's earlier than both prior futures
-		if (i.t >= now && i.t < a->future->t
+		if (i.t >= now - EVENT_BACKWARD_TOLERANCE && i.t < a->future->t
 		 && (!b->future || i.t < b->future->t)) {
 			 // Reject event if its too soon of a repeat
 			if (i.t < now+EVENT_REPEAT_INTERVAL)
 				for (Event* e = current_event; e && e->t > i.t - EVENT_REPEAT_INTERVAL; e = e->prev)
 					if ((e->a == a && e->b == b)
-					 || (e->a == b && e->b == a)) goto nope;
+					 || (e->a == b && e->b == a))
+					if (e->call == i.call)
+						goto nope;
 			picked = b;
 			a->future->t = i.t;
 			a->future->call = i.call;

@@ -23,7 +23,7 @@ inline void move_paddle_left(Paddle* a, Keyboard* kbd) {
 }
 
 inline void move_paddle_right(Paddle* a, Keyboard* kbd) {
-	a->keyvel.x = 120*D/T;
+	a->keyvel.x = +120*D/T;
 }
 
 inline void stop_paddle(Paddle* a, Object* b) {
@@ -31,18 +31,14 @@ inline void stop_paddle(Paddle* a, Object* b) {
 }
 
 static inline Interaction interaction(Paddle* a, Keyboard* kbd) {
-	if (kbd->key_pressed) {
-		if (kbd->last_key == SDLK_RIGHT)
-			return interact<Paddle, Keyboard, move_paddle_right>(kbd->time);
-		else if (kbd->last_key == SDLK_LEFT)
-			return interact<Paddle, Keyboard, move_paddle_left>(kbd->time);
-		else return nointeraction;
-	}
-	else {
-		if (kbd->last_key == SDLK_LEFT || kbd->last_key == SDLK_RIGHT)
+	if (kbd->key[SDLK_RIGHT]) {
+		if (kbd->key[SDLK_LEFT])
 			return interact<Paddle, Object, stop_paddle>(kbd->time);
+		else return interact<Paddle, Keyboard, move_paddle_right>(kbd->time);
 	}
-	return nointeraction;
+	else if (kbd->key[SDLK_LEFT])
+		return interact<Paddle, Keyboard, move_paddle_left>(kbd->time);
+	return interact<Paddle, Object, stop_paddle>(kbd->time);
 }
 
 add_interaction(Paddle, Keyboard)

@@ -2,7 +2,7 @@
 #define _HAVE_EVENT_H
 
 #define EVENT_REPEAT_INTERVAL 0.00001*T
-
+#define EVENT_BACKWARD_TOLERANCE 0.000001*T
 
 struct Event : gc, LL<Event>, Interaction {
 	Object* a;
