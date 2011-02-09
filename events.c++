@@ -99,6 +99,8 @@ void main_loop () {
 	get_input();  // This is not accurate
 	if (!screen) screen = new Screen();
 	screen->create();
+	if (!kbd) kbd = new Keyboard();
+	kbd->create();
 	while (Event* e = current_event) {
 		 // Drop past events if unneeded
 		if (e->t - now > EVENT_REPEAT_INTERVAL)

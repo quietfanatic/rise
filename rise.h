@@ -13,7 +13,6 @@
 #include "types/Vec.h"
 #include "types/LL.h"
 
-void dump_event_list();
  // Backend (There's only one for now)
 #include "backend/sdl.h"
 
@@ -31,12 +30,14 @@ Frequency game_fps = 30/T;
 #include "interactions.h"
 #include "obj/Object.h"
 #include "obj/Screen.h"
+#include "obj/Keyboard.h"
 #include "events.h"
 
 
 Event* current_event = NULL;
 Object* first_object = NULL;
 Screen* screen = NULL;
+Keyboard* kbd = NULL;
 Time now = 0*T;
 
 

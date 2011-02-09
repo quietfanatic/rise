@@ -4,9 +4,11 @@
 #include "rise.h"
 
 
+#include "backend/sdl.c++"
 #include "interactions.c++"
 #include "obj/Object.c++"
 #include "obj/Screen.c++"
+#include "obj/Keyboard.c++"
 #include "events.c++"
 
 
