@@ -18,9 +18,22 @@ struct LinearRect : Linear {
 
 
 Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
-	Dim<0, 1, 0> r, d, l, u;
 	Vec2<Velocity> rv = relvel(a, b, now);
-	 // We use multiplication instead of division because it doesn't require checking for special cases.
+	if (rv.x == 0*D/T) {
+		if (rv.y > 0*D/T)
+			return DOWN;
+		else if (rv.y < 0*D/T)
+			return UP;
+		else return NILVEC;
+	}
+	if (rv.y == 0*D/T) {
+		if (rv.x > 0*D/T)
+			return RIGHT;
+		else if (rv.x < 0*D/T)
+			return LEFT;
+		else return NILVEC;
+	}
+	Dim<0, 1, 0> r, d, l, u;
 	r = (b->left(now) - a->right(now)) / rv.x;
 	d = (b->top(now) - a->bottom(now)) / rv.y;
 	l = (b->right(now) - a->left(now)) / rv.x;
@@ -37,12 +50,26 @@ Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
 }
 
 Vec2<> collision_direction (LinearRect* a, Boundary* b) {
-	Dim<0, 1, 0> r, d, l, u;
 	Vec2<Velocity> rv = relvel(a, b, now);
-	r = (b->right(now) - a->right(now)) / rv.x;
+	if (rv.x == 0*D/T) {
+		if (rv.y > 0*D/T)
+			return DOWN;
+		else if (rv.y < 0*D/T)
+			return UP;
+		else return NILVEC;
+	}
+	if (rv.y == 0*D/T) {
+		if (rv.x > 0*D/T)
+			return RIGHT;
+		else if (rv.x < 0*D/T)
+			return LEFT;
+		else return NILVEC;
+	}
+	Dim<0, 1, 0> r, d, l, u;
+	r = (b->right(now) - a->right(now))   / rv.x;
 	d = (b->bottom(now) - a->bottom(now)) / rv.y;
-	l = (b->left(now) - a->left(now)) / rv.x;
-	u = (b->top(now) - a->top(now)) / rv.y;
+	l = (b->left(now) - a->left(now))     / rv.x;
+	u = (b->top(now) - a->top(now))       / rv.y;
 	return
 	rv.x>0*D/T ? rv.y>0*D/T ? r<d ? u<r ? RIGHT : NILVEC
 	                              : l<d ? DOWN  : NILVEC

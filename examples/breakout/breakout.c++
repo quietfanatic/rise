@@ -2,8 +2,8 @@
 #include "rise.c++"
 #include "Room.c++"
 #include "Brick.c++"
+#include "Paddle.c++"
 #include "Ball.c++"
-
 
 
 
@@ -18,6 +18,7 @@ int main () {
 	for (uint j=2; j < 10; j++)
 		(new Brick({i*32*D, j*12*D}))->create();
 	(new Ball({160*D, 220*D}, {90*D/T, -90*D/T}))->create();
+	(new Paddle)->create();
 	(new Room)->create();
 	main_loop();
 	return 0;

@@ -127,6 +127,7 @@ void get_input () {
 				else if (input.key.keysym.sym < 400) {
 					kbd->key_pressed = true;
 					kbd->last_key = input.key.keysym.sym;
+					kbd->time = now;
 					kbd->key[input.key.keysym.sym] = true;
 					check_interactions(kbd);
 				}
@@ -136,6 +137,7 @@ void get_input () {
 				if (input.key.keysym.sym < 400) {
 					kbd->key_pressed = false;
 					kbd->last_key = input.key.keysym.sym;
+					kbd->time = now;
 					kbd->key[input.key.keysym.sym] = false;
 					check_interactions(kbd);
 				}
