@@ -29,12 +29,14 @@ Frequency game_fps = 30/T;
 
  // Our stuff
 #include "interactions.h"
-#include "events.h"
 #include "obj/Object.h"
+#include "obj/Screen.h"
+#include "events.h"
 
 
 Event* current_event = NULL;
 Object* first_object = NULL;
+Screen* screen = NULL;
 Time now = 0*T;
 
 

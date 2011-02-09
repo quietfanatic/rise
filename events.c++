@@ -1,6 +1,6 @@
 #ifndef _HAVE_EVENTS_CPP
 #define _HAVE_EVENTS_CPP
-
+#include "obj/Screen.c++"
 
 //struct Event : gc, LL<Event>, Interaction {
 //	Object* a;
@@ -92,13 +92,13 @@ void check_interactions(Object* a) {
 	}
 }
 
-Event draw_event;
 
 void main_loop () {
 	now = 0*T;
 	set_video({320*D, 240*D});
 	get_input();  // This is not accurate
-	draw_event.schedule();
+	if (!screen) screen = new Screen();
+	screen->create();
 	while (Event* e = current_event) {
 		 // Drop past events if unneeded
 		if (e->t - now > EVENT_REPEAT_INTERVAL)
@@ -107,25 +107,8 @@ void main_loop () {
 		delay_to(now);
 		get_input();  // This is not accurate
 		current_event = e->next;
-		if (e->call == NULL) {
-			draw_objects();
-			e->unschedule();
-			e->t = now + 1/game_fps;
-			e->schedule();
-		}
-		else
-			e->happen();
+		e->happen();
 	}
-}
-
-
-void draw_objects() {
-	if (background_color.a != 0)
-		background_color.draw({0*D, 0*D}, game_size);
-	for (Object* o = first_object; o; o = o->next) {
-		o->draw(now);
-	}
-	update_window();
 }
 
 
