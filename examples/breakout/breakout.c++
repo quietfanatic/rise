@@ -7,8 +7,9 @@
 #include "Room.c++"
 #include "Brick.c++"
 #include "Paddle.c++"
+Paddle* paddle;
 #include "Ball.c++"
-
+Ball* ball;
 
 
 
@@ -21,8 +22,8 @@ int main () {
 	for (uint i=0; i < 10; i++)
 	for (uint j=2; j < 10; j++)
 		(new Brick({i*32*D, j*12*D}))->create();
-	(new Ball({160*D, 220*D}, {90*D/T, -90*D/T}))->create();
-	(new Paddle)->create();
+	(paddle = new Paddle)->create();
+	(ball = new Ball)->create();
 	(new Room)->create();
 	main_loop();
 	return 0;

@@ -20,18 +20,22 @@ struct LinearRect : Linear {
 Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
 	Vec2<Velocity> rv = relvel(a, b, now);
 	if (rv.x == 0*D/T) {
+		if (!(a->bottom(now) > b->top(now) && b->bottom(now) > a->top(now)))
+			return NILVEC;
 		if (rv.y > 0*D/T)
 			return DOWN;
-		else if (rv.y < 0*D/T)
+		if (rv.y < 0*D/T)
 			return UP;
-		else return NILVEC;
+		return NILVEC;
 	}
 	if (rv.y == 0*D/T) {
+		if (!(a->right(now) > b->left(now) && b->right(now) > a->left(now)))
+			return NILVEC;
 		if (rv.x > 0*D/T)
 			return RIGHT;
-		else if (rv.x < 0*D/T)
+		if (rv.x < 0*D/T)
 			return LEFT;
-		else return NILVEC;
+		return NILVEC;
 	}
 	Dim<0, 1, 0> r, d, l, u;
 	r = (b->left(now) - a->right(now)) / rv.x;
