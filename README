@@ -1,0 +1,36 @@
+RISE
+
+Realtime Indiscrete Simulation Engine
+
+
+...what does indiscrete mean?  It means RISE does not operate on a discrete
+time grid.  Unlike most game engines, it does not work by iterating the
+positions of each object every frame and checking for interactions.  Instead,
+it schedules the interactions ahead of time for the exact time they will occur.
+Most game engines that claim to be framerate-independent justify that claim by
+integrating the velocity of their objects over the length of the frame, but
+they still do collision checking once per frame, and so with low framerates
+they exhibit many physics errors.  However, RISE is 100% framerate-
+independent.*  That's because there are no frames except for rendering
+purposes, and rendering does not affect the movement of the objects.  This
+means that physics in RISE are always just as accurate as they were programmed
+to be.  To put it another way, timing in most game engines is accurate to about
+1/60th of a second; timing in RISE is accurate to about one microsecond.
+
+Does that make it harder to program with RISE?  Slightly, because the movement
+of objects must be described mathematically instead of by incrementing values
+every frame.  However, you can still set periodic timers on your objects to
+have them exhibit behavior once every fraction of a second, which you can use
+if you wish to program your objects in a more discrete style.
+
+===NOTICE===
+This engine is under heavy development and its API may change without any
+warnings.  Use at your own (in)discretion.
+============
+
+
+* Currently, this is not quite true, because realtime input is not implemented
+and so input timing may change based on rendering framerate.  Eventually this
+will be fixed, and at that time RISE will be truly 100% framerate-independent.
+
+

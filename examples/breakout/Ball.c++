@@ -28,8 +28,7 @@ struct Ball : public LinearRect {
 		return {-3*D, -3*D};
 	}
 	
-	Ball ()
-		: LinearRect(), alive(false) { }
+	Ball () : LinearRect(), alive(false) { }
 };
 add_IC(Ball)
 
@@ -37,16 +36,23 @@ add_IC(Ball)
 void bounce_x (Ball* ball, Object* room) {
 	ball->keyvel.x = -ball->keyvel.x;
 }
+void bounce_y (Ball* ball, Object* room) {
+	ball->keyvel.y = -ball->keyvel.y;
+}
 void destroy_x (Ball* ball, Brick* brick) {
 	ball->keyvel.x = -ball->keyvel.x;
 	brick->destroy();
 }
-void bounce_y (Ball* ball, Object* room) {
-	ball->keyvel.y = -ball->keyvel.y;
-}
 void destroy_y (Ball* ball, Brick* brick) {
 	ball->keyvel.y = -ball->keyvel.y;
 	brick->destroy();
+}
+
+void bounce_paddle (Ball* ball, Paddle* paddle) {
+	ball->keyvel.y = -ball->keyvel.y;
+	ball->keyvel.x += (ball->keypos.x - paddle->keypos.x) / (0.2*T);
+	if (ball->keyvel.x > 240*D/T) ball->keyvel.x = 240*D/T;
+	if (ball->keyvel.x < -240*D/T) ball->keyvel.x = -240*D/T;
 }
 
 void kill_ball (Ball* ball, Room* room) {
@@ -78,13 +84,6 @@ interaction(Ball, Room, {
 	return nointeraction;
 })
 
-
-void bounce_paddle (Ball* ball, Paddle* paddle) {
-	ball->keyvel.y = -ball->keyvel.y;
-	ball->keyvel.x += (ball->keypos.x - paddle->keypos.x) / (0.2*T);
-	if (ball->keyvel.x > 240*D/T) ball->keyvel.x = 240*D/T;
-	if (ball->keyvel.x < -240*D/T) ball->keyvel.x = -240*D/T;
-}
 
 interaction(Ball, Paddle, {
 	if (a->alive)
