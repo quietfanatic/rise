@@ -18,33 +18,31 @@ struct Paddle : LinearRect {
 add_IC(Paddle)
 
 
-inline void move_paddle_left(Paddle* a, Keyboard* kbd) {
+void move_paddle_left(Paddle* a, Keyboard* kbd) {
 	a->keyvel.x = -120*D/T;
 }
 
-inline void move_paddle_right(Paddle* a, Keyboard* kbd) {
+void move_paddle_right(Paddle* a, Keyboard* kbd) {
 	a->keyvel.x = +120*D/T;
 }
 
-inline void stop_paddle(Paddle* a, Object* b) {
+void stop_paddle(Paddle* a, Object* b) {
 	a->keyvel.x = 0*D/T;
 }
 
-static inline Interaction interaction(Paddle* a, Keyboard* kbd) {
+interaction(Paddle, Keyboard, {
 	if (kbd->key[SDLK_RIGHT]) {
 		if (kbd->key[SDLK_LEFT])
-			return interact<Paddle, Object, stop_paddle>(kbd->time);
-		else return interact<Paddle, Keyboard, move_paddle_right>(kbd->time);
+			return kbd->time >> &move_paddle_left;
+		else return kbd->time >> &move_paddle_right;
 	}
 	else if (kbd->key[SDLK_LEFT])
-		return interact<Paddle, Keyboard, move_paddle_left>(kbd->time);
-	return interact<Paddle, Object, stop_paddle>(kbd->time);
-}
+		return kbd->time >> move_paddle_left;
+	return kbd->time >> stop_paddle;
+})
 
-add_interaction(Paddle, Keyboard)
 
-static inline Interaction interaction(Paddle* a, Room* room) {
-	return interact<Paddle, Object, stop_paddle>(time_to_collide(a, room));
-}
+interaction(Paddle, Room, {
+	return time_to_collide(a, b) >> &stop_paddle;
+})
 
-add_interaction(Paddle, Room)

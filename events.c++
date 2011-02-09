@@ -9,7 +9,7 @@
 	void Event::happen () {
 		a->update();
 		b->update();
-		(*call)(a, b);
+		(*wrap)(call, a, b);
 		a->future = b->future = NULL;
 		check_interactions(a);
 		if (a != b)
@@ -71,6 +71,7 @@ void check_interactions(Object* a) {
 						goto nope;
 			picked = b;
 			newfuture->t = i.t;
+			newfuture->wrap = i.wrap;
 			newfuture->call = i.call;
 			if (flip) {
 				newfuture->a = b;

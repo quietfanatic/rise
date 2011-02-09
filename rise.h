@@ -28,6 +28,7 @@ Frequency game_fps = 30/T;
 
  // Our stuff
 #include "interactions.h"
+#include "syntax.h"
 #include "obj/Object.h"
 #include "obj/Screen.h"
 #include "obj/Keyboard.h"

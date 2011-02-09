@@ -15,10 +15,9 @@ add_IC(TestObject)
 void testinteract(TestObject* a, TestObject* b) {
 	printf("Interacting!\n");
 }
-Interaction interaction(TestObject* a, TestObject* b) {
-	return interact<TestObject, TestObject, testinteract>(now+0.5*T);
-}
-add_interaction(TestObject, TestObject)
+interaction(TestObject, TestObject, {
+	return now + 0.5*T >> &testinteract;
+})
 
 
 int main () {

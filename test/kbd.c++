@@ -6,14 +6,13 @@ struct KbdTest : Object {
 };
 add_IC(KbdTest);
 
-static inline Interaction interaction(Keyboard* kbd, KbdTest* b) {
-	if (kbd->key_pressed)
-		printf("Key down: %d\n", kbd->last_key);
+interaction(Keyboard, KbdTest, {
+	if (a->key_pressed)
+		printf("Key down: %d\n", a->last_key);
 	else
-		printf("Key up: %d\n", kbd->last_key);
+		printf("Key up: %d\n", a->last_key);
 	return nointeraction;
-}
-add_interaction(Keyboard, KbdTest)
+})
 
 
 int main () {

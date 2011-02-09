@@ -22,14 +22,13 @@ inline void render (Screen* screen, Screen* b) {
 	screen->next_render = now + 1/screen->fps;
 }
 
-static inline Interaction interaction(Screen* a, Screen* b) {
+interaction(Screen, Screen, {
 	if (a != b) {
 		printf("Warning: Multiple screens have been defined!\n");
 		return nointeraction;
 	}
-	return interact<Screen, Screen, render>(a->next_render <= now ? now : a->next_render);
-}
-add_interaction(Screen, Screen)
+	return (a->next_render <= now ? now : a->next_render) >> &render;
+})
 
 
 #endif
