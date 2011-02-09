@@ -79,7 +79,8 @@ bool backend_init () {
 
 
  // Window functions
-void update_window () {
+void start_render () { }
+void finish_render () {
 	SDL_Flip(_sdl_window);
 }
 void set_video (Vec<Distance> size) {

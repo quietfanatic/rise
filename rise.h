@@ -13,8 +13,12 @@
 #include "types/Vec.h"
 #include "types/LL.h"
 
- // Backend (There's only one for now)
+ // Backend selection
+#ifdef RISE_USE_OPENGL
+#include "backend/sdl-opengl.h"
+#else
 #include "backend/sdl.h"
+#endif
 
 struct Object;
 struct Interaction;

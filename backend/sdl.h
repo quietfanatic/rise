@@ -1,8 +1,8 @@
 #ifndef _HAVE_BACKEND_SDL_H
 #define _HAVE_BACKEND_SDL_H
 
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 
 
@@ -61,7 +61,8 @@ struct Color : gc {
 
 
  // Window functions
-void update_window ();
+void start_render ();
+void finish_render ();
 void set_video (Vec<Distance> size);
 void quit_backend ();
 

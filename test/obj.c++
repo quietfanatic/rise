@@ -1,4 +1,4 @@
-
+#define RISE_USE_OPENGL
 #include "rise.c++"
 
 
@@ -6,7 +6,7 @@
 struct TestObject : Object {
 	is_IC
 	virtual void draw (Time t) {
-		Color(0xff, 0xff, 0xff, 0xff).draw({32*D, 32*D}, {64*D, 64*D});
+		Image("testimage.png").draw({32*D, 32*D});
 	}
 };
 add_IC(TestObject)
