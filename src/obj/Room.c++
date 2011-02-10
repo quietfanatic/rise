@@ -30,7 +30,6 @@ add_IC(Room);
 
 	Room::Room () : Boundary({0*D, 0*D}),
 	          _size({640*D, 480*D}),
-	          fps(30/T),
 			  background_color(Color(0x000000)) { }
 //};
 

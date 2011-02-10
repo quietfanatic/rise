@@ -16,6 +16,11 @@
 #include "obj/Room.c++"
 
 
+void rise_init() {
+	GC_enable_incremental();
+	backend_init();
+	init_interactions();
+}
 
 
 

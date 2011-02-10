@@ -2,10 +2,6 @@
 #define _HAVE_GLOBALS_H
 
 
- // TO BE REPLACED by attributes of Room
-Color background_color = 0x000000;
-Vec2<Distance> game_size = {640*D, 480*D};
-Frequency game_fps = 30/T;
 
 
 

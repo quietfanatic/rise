@@ -8,14 +8,14 @@
 //	is_IC;
 //	Time next_render;
 //	Frequency fps;
-	Screen::Screen () : fps(game_fps), next_render(now) { }
+	Screen::Screen () : fps(30/T), next_render(now) { }
 //};
 add_IC(Screen);
 
 inline void render (Screen* screen, Screen* b) {
 	start_render();
-	if (background_color.a != 0)
-		background_color.draw({0*D, 0*D}, game_size);
+	if (room->background_color.a != 0)
+		room->background_color.draw({0*D, 0*D}, room->_size);
 	for (Object* o = first_object; o; o = o->next) {
 		o->draw(now);
 	}

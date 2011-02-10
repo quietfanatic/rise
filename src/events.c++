@@ -109,12 +109,11 @@ void check_interactions(Object* a) {
 
 void main_loop () {
 	now = 0*T;
-	set_video({320*D, 240*D});
-	get_input();  // This is not accurate
-	if (!screen) screen = new Screen();
-	screen->create();
-	if (!kbd) kbd = new Keyboard();
-	kbd->create();
+	get_input();
+	if (!room) (room = new Room)->create();
+	if (!screen) (screen = new Screen)->create();
+	if (!kbd) (kbd = new Keyboard)->create();
+	set_video(room->_size);
 	while (Event* e = current_event) {
 		 // Drop past events if unneeded
 		if (e->t - now > EVENT_REPEAT_INTERVAL)

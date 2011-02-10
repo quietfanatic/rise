@@ -43,7 +43,7 @@ struct Event;
 
 
 
-
+void rise_init ();
 
 
 

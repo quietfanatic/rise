@@ -9,7 +9,6 @@ struct Room : public Boundary {
 	Vec2<Distance> _size;
 	virtual Vec2<Distance> size ();
 //	virtual Vec2<Distance> offset ();
-	Frequency fps;
 
 	virtual float depth ();
 	virtual void draw ();
