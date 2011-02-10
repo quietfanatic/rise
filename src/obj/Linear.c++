@@ -5,6 +5,7 @@
 struct Linear : Spatial {
 	Time keytime;
 	Vec2<Velocity> keyvel;
+	virtual Mass mass () { return 1.0*M; }
 	virtual Vec2<Velocity> vel (Time t) { return keyvel; }
 	virtual Vec2<Distance> pos (Time t) {
 		return keypos + keyvel * (t - keytime);

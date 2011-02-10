@@ -118,6 +118,24 @@ static inline Time time_to_collide (Boundary* a, LinearRect* b) {
 }
 
 
+void bounce (LinearRect* a, LinearRect* b, double elasticity = 1.0) {
+	Vec2<> dir = collision_direction(a, b);
+	if (dir.x) {
+		Velocity tv = (a->keyvel.x * a->mass() + b->keyvel.x * b->mass())
+		            / (a->mass() + b->mass());
+		a->keyvel.x = tv - (a->keyvel.x - tv)*elasticity;
+		b->keyvel.x = tv - (b->keyvel.x - tv)*elasticity;
+	}
+	if (dir.y) {
+		Velocity tv = (a->keyvel.y * a->mass() + b->keyvel.y * b->mass())
+		            / (a->mass() + b->mass());
+		a->keyvel.y = tv - (a->keyvel.y - tv)*elasticity;
+		b->keyvel.y = tv - (b->keyvel.y - tv)*elasticity;
+	}
+}
+
+
+
 
 
 #endif
