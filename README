@@ -29,6 +29,39 @@ warnings.  Use at your own (in)discretion.
 ============
 
 
+Advantages of an indiscrete engine:
+ - No framerate-dependent physics glitches.  Small or fast-moving objects never
+    pass through one another.  Objects do not have to compete for collision
+    priority.
+ - An indiscrete engine allows recovery from slowdown.  After slowdown, the
+    engine "fast-forwards" back to realtime.  whereas a discrete engine would
+    lose those frames and would stay behind realtime forever.  This does not
+    help, of course, if the CPU is consistently too slow to simulate events.
+ - Better algorithmic efficiency in many cases.  In a discrete engine,
+    collision checking for n interacting objects requires n²*fps/2 checks
+    every second, while in an indiscrete engine it requires on the order of
+    n*m*2*s checks, where m is the average number of interactions per second,
+    And s is a small constant (generally less than 2) related to the sloppiness
+    of the event scheduling system.
+    Take for example the examples/bouncing program: there are 200 squares that
+    are moving around.  In this situation, there are a very large number of
+    interactions per second.  However, upon review profiling data, I found that
+    collision checks were performed less than 600,000 times per second, whereas
+    if they were all performed every 60th of a second, there would be 1,200,000
+    checks.  This is not the whole story; the fact that an indiscrete engine
+    requires entirely sweeping collision tests means its checks take longer
+    than a disrete engine's naive overlap tests.  However, using overlap tests
+    can cause the corners of rectangles to miss one another.  If you were to
+    implement physics in a discrete engine as accurately as in an indiscrete
+    engine, it would fall behind in performance.
+    There are some cases in which an indiscrete engine has worse algorithmic
+    efficiency.  When one object interacts simultaneously with each of a group
+    of n objects, in a discrete engine it takes O(n) CPU, but in an indiscrete
+    engine it takes O(n²) CPU unless the objects are being destroyed.
+
+
+
+
 * Currently, this is not quite true, because realtime input is not implemented
 and so input timing may change based on rendering framerate.  Eventually this
 will be fixed, and at that time RISE will be truly 100% framerate-independent.
