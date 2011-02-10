@@ -6,7 +6,6 @@
 
 int main () {
 	rise_init();
-	rand(); rand();
 	for (uint i=0; i < 200; i++)
 		(new Bouncer)->create();
 	(screen = new Screen)->create();

@@ -17,7 +17,7 @@ struct Bouncer : LinearRect {
 	Bouncer () :
 		color(rand()),
 		//color(0xff, 0xff, 0xff),
-		width(rand()*1.0/RAND_MAX * 30*D + 2*D) {
+		width(rand()*1.0*rand()/RAND_MAX/RAND_MAX * 62*D + 2*D) {
 		keypos = {rand()*1.0/RAND_MAX * 640*D - width,
 		          rand()*1.0/RAND_MAX * 480*D - width};
 		keyvel = {rand()*1.0/RAND_MAX * 240*D/T - 120*D/T,
@@ -28,7 +28,7 @@ add_IC(Bouncer)
 
 
 void bouncer_bounce (Bouncer* a, Bouncer* b) {
-	bounce(a, b);
+	bounce(a, b, 1.0);
 }
 
 void bouncer_edgebounce (Bouncer* a, Room* b) {
