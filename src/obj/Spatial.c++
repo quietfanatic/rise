@@ -4,11 +4,12 @@
 
 
 //struct Spatial : Object {
-//	Vec2<Distance> keypos;
-	Vec2<Distance> Spatial::pos (Time t) { return keypos; }
+//	Vec2<Distance> _pos;
+	Vec2<Distance> Spatial::pos (Time t) { return _pos; }
 	Vec2<Velocity> Spatial::vel (Time t) { return {0*D/T, 0*D/T}; }
-	Spatial::Spatial () :keypos({0*D, 0*D}) { }
-	Spatial::Spatial (Vec2<Distance> pos_) :keypos(pos_) { }
+	Vec2<Acceleration> Spatial::acc (Time t) { return {0*D/T/T, 0*D/T/T}; }
+	Spatial::Spatial () :_pos({0*D, 0*D}) { }
+	Spatial::Spatial (Vec2<Distance> pos_) :_pos(pos_) { }
 
 	void Spatial::update () { }  // Position is constant, so no change
 //};

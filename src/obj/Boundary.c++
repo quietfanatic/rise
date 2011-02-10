@@ -5,12 +5,12 @@
 
 
 
-Vec2<Distance> Boundary::size () { return {320*D, 240*D}; }
+Vec2<Distance> Boundary::size (Time t) { return {320*D, 240*D}; }
 
-inline Distance Boundary::right (Time t) { return keypos.x + size().x; }
-inline Distance Boundary::bottom (Time t) { return keypos.y + size().y; }
-inline Distance Boundary::left (Time t) { return keypos.x; }
-inline Distance Boundary::top (Time t) { return keypos.y; }
+inline Distance Boundary::right (Time t) { return _pos.x + size(t).x; }
+inline Distance Boundary::bottom (Time t) { return _pos.y + size(t).y; }
+inline Distance Boundary::left (Time t) { return _pos.x; }
+inline Distance Boundary::top (Time t) { return _pos.y; }
 
 
 Boundary::Boundary (Vec2<Distance> pos_) : Spatial(pos_) { }

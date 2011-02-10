@@ -6,7 +6,7 @@
 
 add_IC(Room);
 //struct Room : public Boundary {
-	Vec2<Distance> Room::size () {
+	Vec2<Distance> Room::size (Time t) {
 		return _size;
 	}
 	

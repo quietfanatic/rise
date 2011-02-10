@@ -5,7 +5,7 @@
 
 
 struct Boundary : public Spatial {
-	virtual Vec2<Distance> size ();
+	virtual Vec2<Distance> size (Time t);
 	Distance right (Time t);
 	Distance bottom (Time t);
 	Distance left (Time t);
