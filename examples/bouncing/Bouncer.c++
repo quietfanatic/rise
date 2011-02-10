@@ -43,10 +43,10 @@ void bouncer_edgebounce (Bouncer* a, Room* b) {
 
 
 interaction(Bouncer, Bouncer, {
-	return time_to_collide(a, b) >> bouncer_bounce;
+	return on_collision(a, b) >> bouncer_bounce;
 })
 interaction(Bouncer, Room, {
-	return time_to_collide(a, b) >> bouncer_edgebounce;
+	return on_collision(a, b) >> bouncer_edgebounce;
 })
 
 

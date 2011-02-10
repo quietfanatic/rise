@@ -44,7 +44,7 @@ interaction(Paddle, Keyboard, {
 
 
 interaction(Paddle, Room, {
-	return time_to_collide(a, b) >> &stop_paddle;
+	return on_collision(a, b) >> &stop_paddle;
 })
 
 

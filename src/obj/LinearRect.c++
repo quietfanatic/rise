@@ -17,6 +17,9 @@ struct LinearRect : Linear {
 
 
 
+
+
+
 Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
 	Vec2<Velocity> rv = relvel(a, b, now);
 	if (rv.x == 0*D/T) {
@@ -88,7 +91,7 @@ static inline Vec2<> collision_direction (Boundary* a, LinearRect* b) {
 	return -collision_direction(b, a);
 }
 
-Time time_to_collide (LinearRect* a, LinearRect* b) {
+Time on_collision (LinearRect* a, LinearRect* b) {
 	Vec2<> dir = collision_direction(a, b);
 	if (dir.x > 0)
 		return now + (b->left(now) - a->right(now)) / (a->keyvel.x - b->keyvel.x);
@@ -101,7 +104,7 @@ Time time_to_collide (LinearRect* a, LinearRect* b) {
 	else return NAN*T;
 }
 
-Time time_to_collide (LinearRect* a, Boundary* b) {
+Time on_collision (LinearRect* a, Boundary* b) {
 	Vec2<> dir = collision_direction(a, b);
 	if (dir.x > 0)
 		return now + (b->right(now) - a->right(now)) / a->keyvel.x;
@@ -113,8 +116,8 @@ Time time_to_collide (LinearRect* a, Boundary* b) {
 		return now + (b->top(now) - a->top(now)) / a->keyvel.y;
 	else return NAN*T;
 }
-static inline Time time_to_collide (Boundary* a, LinearRect* b) {
-	return time_to_collide(b, a);
+static inline Time on_collision (Boundary* a, LinearRect* b) {
+	return on_collision(b, a);
 }
 
 

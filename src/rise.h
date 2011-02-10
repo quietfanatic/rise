@@ -1,6 +1,14 @@
 #ifndef _HAVE_RISE_H
 #define _HAVE_RISE_H
 
+ // Debug control
+#ifdef DEBUG
+#define DEBUGLOG(...) printf(__VA_ARGS__)
+#else
+#define DEBUGLOG(...)
+#endif
+
+
 #include <stdio.h>
 #include <gc/gc.h>
 #include <gc/gc_cpp.h>

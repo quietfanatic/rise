@@ -66,7 +66,7 @@ void start_ball (Ball* ball, Room* room) {
 interaction(Ball, Brick, {
 	if (a->alive) {
 		Vec2<> dir = collision_direction(a, b);
-		Time t = time_to_collide(a, b);
+		Time t = on_collision(a, b);
 		if (dir.x) return t >> destroy_x;
 		if (dir.y) return t >> destroy_y;
 	}
@@ -76,7 +76,7 @@ interaction(Ball, Brick, {
 interaction(Ball, Room, {
 	if (a->alive) {
 		Vec2<> dir = collision_direction(a, b);
-		Time t = time_to_collide(a, b);
+		Time t = on_collision(a, b);
 		if (dir.x) return t >> bounce_x;
 		if (dir.y < 0) return t >> bounce_y;
 		if (dir.y > 0) return t+(6*D/a->keyvel.y) >> kill_ball;
@@ -87,7 +87,7 @@ interaction(Ball, Room, {
 
 interaction(Ball, Paddle, {
 	if (a->alive)
-		return time_to_collide(a, b) >> bounce_paddle;
+		return on_collision(a, b) >> bounce_paddle;
 	else return nointeraction;
 })
 

@@ -7,13 +7,16 @@
 //	Object* b;
 
 	void Event::happen () {
+		if (a != screen)
+			DEBUGLOG("[%10.6f]   ITX: %p & %p @ %10.6f\n", now.repr, a, b, t.repr);
 		a->update();
 		b->update();
 		(*wrap)(call, a, b);
 		a->future = b->future = NULL;
 		check_interactions(a);
-		if (a != b)
+		if (a != b) {
 			check_interactions(b);
+		}
 	}
 	/*void Event::cancel (Object* froma, Object* fromb) {
 		unschedule();
@@ -42,6 +45,12 @@ void check_interactions(Object* a) {
 	Event* newfuture = new Event;
 	newfuture->t = INF*T;
 	for (Object* b = first_object; b; b = b->next) {
+		 // Skip (the first time) if we just had an interaction.
+		 // When the other object checks, this object's future will be NULLed.
+		if (a->future && a->future == b->future) {
+			a->future->unschedule();
+			a->future = b->future = NULL;
+		}
 		Time time_limit = newfuture->t;
 		if (b->future && b->future->t < time_limit)
 			time_limit = b->future->t;
@@ -84,6 +93,8 @@ void check_interactions(Object* a) {
 		nope: ;
 	}
 	if (picked) {
+		if (a != screen)
+			DEBUGLOG("[%10.6f] ADD  : %p & %p @ %10.6f\n", now.repr, a, picked, newfuture->t.repr);
 		Event* of = picked->future;
 
 		a->future = newfuture;
@@ -91,6 +102,7 @@ void check_interactions(Object* a) {
 		newfuture->schedule();
 
 		if (of != NULL) {
+			DEBUGLOG("[%10.6f]  CAN : %p & %p @ %10.6f\n", now.repr, of->a, of->b, of->t.repr);
 			 // Cancel the other object's future.
 			 // And recalculate other futures if needed.
 			of->unschedule();
