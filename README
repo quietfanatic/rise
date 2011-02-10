@@ -24,8 +24,8 @@ have them exhibit behavior once every fraction of a second, which you can use
 if you wish to program your objects in a more discrete style.
 
 ===NOTICE===
-This engine is under heavy development and its API may change without any
-warnings.  Use at your own (in)discretion.
+This engine is under heavy development and its API is completely undocumented
+and may change without any warnings.  Use at your own (in)discretion.
 ============
 
 
