@@ -2,6 +2,7 @@
 #define _HAVE_OBJ_ROOM_CPP
 
 #include "obj/Room.h"
+#include "obj/Boundary.c++"
 
 add_IC(Room);
 //struct Room : public Boundary {

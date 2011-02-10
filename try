@@ -4,6 +4,6 @@ shift =~ /(.*?)(?:\.c\+\+)?$/;
 my $name = $1;
 $name =~ s/'/'\\\\''/g;
 
-!system("g++-4.5 -ggdb -Irise -std=gnu++0x -Wall -Wno-parentheses -Wno-reorder -lgc -lgccpp -lSDL -lSDL_image -lGL -lGLU -o '$name' '$name.c++'")
+!system("g++-4.5 -ggdb -Irise/src -std=gnu++0x -Wall -Wno-parentheses -Wno-reorder -lgc -lgccpp -lSDL -lSDL_image -lGL -lGLU -o '$name' '$name.c++'")
 and exec("'./$name'");
 
