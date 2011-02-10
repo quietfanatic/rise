@@ -1,6 +1,6 @@
 #ifndef _HAVE_BOUNDARY_H
 #define _HAVE_BOUNDARY_H
-
+#include "obj/Spatial.h"
 
 
 

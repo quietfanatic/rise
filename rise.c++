@@ -12,6 +12,7 @@
 #include "obj/Object.c++"
 #include "obj/Screen.c++"
 #include "obj/Keyboard.c++"
+#include "obj/Room.c++"
 #include "events.c++"
 
 

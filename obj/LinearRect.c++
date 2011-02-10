@@ -1,7 +1,7 @@
 #ifndef _HAVE_LINEARRECT_CPP
 #define _HAVE_LINEARRECT_CPP
 #include "obj/Linear.c++"
-
+#include "obj/Boundary.c++"
 
 struct LinearRect : Linear {
 	virtual Vec2<Distance> size () { return {32*D, 32*D}; }
