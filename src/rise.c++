@@ -17,7 +17,7 @@
 
 
 void rise_init() {
-	GC_enable_incremental();
+	//GC_enable_incremental();
 	backend_init();
 	init_interactions();
 }

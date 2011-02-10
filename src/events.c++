@@ -41,7 +41,7 @@
 
 void check_interactions(Object* a) {
 	Object* picked = NULL;
-	Event* newfuture = new Event;
+	Event* newfuture = new (GC) Event;
 	newfuture->t = INF*T;
 	for (Object* b = first_object; b; b = b->next) {
 		 // Skip (the first time) if we just had an interaction.
@@ -108,13 +108,16 @@ void check_interactions(Object* a) {
 			 // Cancel the other object's future.
 			 // And recalculate other futures if needed.
 			of->unschedule();
-			if (of->a != a && of->a != picked) {
-				of->a->future = NULL;
-				return check_interactions(of->a);
+			Object* ofa = of->a;
+			Object* ofb = of->b;
+			delete of;
+			if (ofa != a && ofa != picked) {
+				ofa->future = NULL;
+				return check_interactions(ofa);
 			}
-			if (of->b != a && of->b != picked) {
-				of->b->future = NULL;
-				return check_interactions(of->b);
+			if (ofb != a && ofb != picked) {
+				ofb->future = NULL;
+				return check_interactions(ofb);
 			}
 		}
 	}
@@ -122,6 +125,7 @@ void check_interactions(Object* a) {
 		if (a->future)
 		printf("Object %p has a leftover future for %10.6f.\n", a, a->future->t.repr);
 		a->future = NULL;
+		delete newfuture;
 	}
 }
 
@@ -135,8 +139,14 @@ void main_loop () {
 	set_video(room->_size);
 	while (Event* e = current_event) {
 		 // Drop past events if unneeded
-		if (e->t - now > EVENT_REPEAT_INTERVAL)
+		if (e->t - now > EVENT_REPEAT_INTERVAL) {
+			Event* oldold;
+			for (Event* old = e->prev; old; old = oldold) {
+				oldold = old->prev;
+				delete old;
+			}
 			e->prev = NULL;
+		}
 		now = e->t;
 		delay_to(now);
 		get_input();  // This is not accurate
@@ -148,9 +158,8 @@ void main_loop () {
 
 void dump_event_list () {
 	for (Event* e = current_event; e; e = e->next) {
-		printf("At %lf do 0x%08x on 0x%08x & 0x%08x\n",
-			(double)(e->t/T), (uint)(void*)e->call,
-			(uint)(void*)e->a, (uint)(void*)e->b);
+		printf("At %f do %p on %p & %p\n",
+			e->t.repr, e->call, e->a, e->b);
 	}
 }
 

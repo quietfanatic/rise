@@ -4,11 +4,10 @@
 #define EVENT_REPEAT_INTERVAL 0.000001*T
 #define EVENT_BACKWARD_TOLERANCE 0.000001*T
 
-struct Event : gc, LL<Event>, Interaction {
+struct Event : public gc, LL<Event>, Interaction {
 	Object* a;
 	Object* b;
 	void happen ();
-//	void cancel (Object* froma, Object* fromb);
 	void schedule ();
 	void unschedule ();
 };

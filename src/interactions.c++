@@ -78,7 +78,7 @@ void dump_interaction_matrix() {
 	for (uint i=0; i < nICs; i++) {
 		printf("%02d: ", i);
 		for (uint j=0; j < nICs; j++)
-			printf("%08x ", (uint)(void*)ITX_LOOKUP(i, j));
+			printf("%p", (void*)ITX_LOOKUP(i, j));
 		printf("\n");
 	}
 }
