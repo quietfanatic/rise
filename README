@@ -10,7 +10,7 @@ it schedules the interactions ahead of time for the exact time they will occur.
 Most game engines that claim to be framerate-independent justify that claim by
 integrating the velocity of their objects over the length of the frame, but
 they still do collision checking once per frame, and so with low framerates
-they exhibit many physics errors.  However, RISE is 100% framerate-
+they tend to exhibit physics errors.  However, RISE is 100% framerate-
 independent.*  That's because there are no frames except for rendering
 purposes, and rendering does not affect the movement of the objects.  This
 means that physics in RISE are always just as accurate as they were programmed
