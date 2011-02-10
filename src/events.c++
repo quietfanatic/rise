@@ -14,9 +14,8 @@
 		(*wrap)(call, a, b);
 		a->future = b->future = NULL;
 		check_interactions(a);
-		if (a != b) {
+		if (a != b)
 			check_interactions(b);
-		}
 	}
 	/*void Event::cancel (Object* froma, Object* fromb) {
 		unschedule();
@@ -47,13 +46,16 @@ void check_interactions(Object* a) {
 	for (Object* b = first_object; b; b = b->next) {
 		 // Skip (the first time) if we just had an interaction.
 		 // When the other object checks, this object's future will be NULLed.
-		if (a->future && a->future == b->future) {
-			a->future->unschedule();
-			a->future = b->future = NULL;
+		if (b->future && (b->future->a == a || b->future->b == a)) {
+			b->future->unschedule();
+			b->future = a->future = NULL;
 		}
 		Time time_limit = newfuture->t;
 		if (b->future && b->future->t < time_limit)
 			time_limit = b->future->t;
+		if (b->future && b->future->t < now) {
+			printf("Warning: detected a leftover future on object %p for %10.6f\n", b, b->future->t.repr);
+		}
 		Interaction i;
 		bool flip;  // Reverse arguments to callback?
 		ICID aid = a->icid();
@@ -115,6 +117,11 @@ void check_interactions(Object* a) {
 				return check_interactions(of->b);
 			}
 		}
+	}
+	else {
+		if (a->future)
+		printf("Object %p has a leftover future for %10.6f.\n", a, a->future->t.repr);
+		a->future = NULL;
 	}
 }
 
