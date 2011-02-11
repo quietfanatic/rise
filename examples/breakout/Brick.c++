@@ -12,9 +12,9 @@ struct Brick : public LinearRect {
 	virtual Vec2<Distance> size () {
 		return {32*D, 12*D};
 	}
-	virtual void draw (Time t) {
-		color.draw(pos(t), size());
-		Brick_image.draw(pos(t));
+	virtual void draw () {
+		color.draw(pos(), size());
+		Brick_image.draw(pos());
 	}
 	Brick (Vec2<Distance> pos_)
 		: LinearRect(pos_, {0*D/T, 0*D/T}), color(rand()) { }

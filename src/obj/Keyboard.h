@@ -11,6 +11,11 @@ struct Keyboard : Object {
 
 
 
+Time on_keypress (uint);
+Time on_keyrelease (uint);
+
+
+
 
 
 

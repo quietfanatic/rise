@@ -9,8 +9,8 @@ struct Paddle : LinearRect {
 	virtual Vec2<Distance> offset () {
 		return {-20*D, -2*D};
 	}
-	virtual void draw (Time t) {
-		Color(0xff, 0xff, 0xff, 0xff).draw(pos(t) + offset(), size());
+	virtual void draw () {
+		Color(0xff, 0xff, 0xff, 0xff).draw(pos() + offset(), size());
 	}
 
 	Paddle () :LinearRect({160*D, 220*D}) { }
@@ -19,22 +19,22 @@ add_IC(Paddle)
 
 
 void move_paddle_left(Paddle* a, Keyboard* kbd) {
-	a->keyvel.x = -120*D/T;
+	a->_vel.x = -120*D/T;
 }
 
 void move_paddle_right(Paddle* a, Keyboard* kbd) {
-	a->keyvel.x = +120*D/T;
+	a->_vel.x = +120*D/T;
 }
 
 void stop_paddle(Paddle* a, Object* b) {
-	a->keyvel.x = 0*D/T;
+	a->_vel.x = 0*D/T;
 }
 
 
 interaction(Paddle, Keyboard, {
 	if (kbd->key[SDLK_RIGHT]) {
 		if (kbd->key[SDLK_LEFT])
-			return kbd->time >> move_paddle_left;
+			return kbd->time >> stop_paddle;
 		else return kbd->time >> move_paddle_right;
 	}
 	if (kbd->key[SDLK_LEFT])

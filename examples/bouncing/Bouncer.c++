@@ -18,10 +18,10 @@ struct Bouncer : LinearRect {
 		color(rand()),
 		//color(0xff, 0xff, 0xff),
 		width(rand()*1.0*rand()/RAND_MAX/RAND_MAX * 62*D + 2*D) {
-		_pos = {rand()*1.0/RAND_MAX * 640*D - width,
-		        rand()*1.0/RAND_MAX * 480*D - width};
-		_vel = {rand()*1.0/RAND_MAX * 240*D/T - 120*D/T,
-		        rand()*1.0/RAND_MAX * 240*D/T - 120*D/T};
+		_pos = {rand()*1.0/RAND_MAX * 900*D - width,
+		        rand()*1.0/RAND_MAX * 900*D - width};
+		_vel = {rand()*1.0/RAND_MAX * 600*D/T - 300*D/T,
+		        rand()*1.0/RAND_MAX * 600*D/T - 300*D/T};
 	}
 };
 add_IC(Bouncer)
