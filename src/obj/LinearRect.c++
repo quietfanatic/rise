@@ -4,12 +4,12 @@
 #include "obj/Boundary.c++"
 
 struct LinearRect : Linear {
-	virtual Vec2<Distance> size (Time t) { return {32*D, 32*D}; }
-	virtual Vec2<Distance> offset (Time t) { return {0*D, 0*D}; }
-	Distance right (Time t) { return pos(t).x + size(t).x + offset(t).x; }
-	Distance bottom (Time t) { return pos(t).y + size(t).y + offset(t).y; }
-	Distance left (Time t) { return pos(t).x + offset(t).x; }
-	Distance top (Time t) { return pos(t).y + offset(t).y; }
+	virtual Vec2<Distance> size () { return {32*D, 32*D}; }
+	virtual Vec2<Distance> offset () { return {0*D, 0*D}; }
+	Distance right () { return pos().x + size().x + offset().x; }
+	Distance bottom () { return pos().y + size().y + offset().y; }
+	Distance left () { return pos().x + offset().x; }
+	Distance top () { return pos().y + offset().y; }
 	LinearRect () : Linear() { }
 	LinearRect (Vec2<Distance> pos_) : Linear(pos_) { }
 	LinearRect (Vec2<Distance> pos_, Vec2<Velocity> vel_) : Linear(pos_, vel_) { }
@@ -21,9 +21,9 @@ struct LinearRect : Linear {
 
 
 Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
-	Vec2<Velocity> rv = relvel(a, b, now);
+	Vec2<Velocity> rv = relvel(a, b);
 	if (rv.x == 0*D/T) {
-		if (!(a->bottom(now) > b->top(now) && b->bottom(now) > a->top(now)))
+		if (!(a->bottom() > b->top() && b->bottom() > a->top()))
 			return NILVEC;
 		if (rv.y > 0*D/T)
 			return DOWN;
@@ -32,7 +32,7 @@ Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
 		return NILVEC;
 	}
 	if (rv.y == 0*D/T) {
-		if (!(a->right(now) > b->left(now) && b->right(now) > a->left(now)))
+		if (!(a->right() > b->left() && b->right() > a->left()))
 			return NILVEC;
 		if (rv.x > 0*D/T)
 			return RIGHT;
@@ -41,10 +41,10 @@ Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
 		return NILVEC;
 	}
 	Dim<0, 1, 0> r, d, l, u;
-	r = (b->left(now) - a->right(now)) / rv.x;
-	d = (b->top(now) - a->bottom(now)) / rv.y;
-	l = (b->right(now) - a->left(now)) / rv.x;
-	u = (b->bottom(now) - a->top(now)) / rv.y;
+	r = (b->left() - a->right()) / rv.x;
+	d = (b->top() - a->bottom()) / rv.y;
+	l = (b->right() - a->left()) / rv.x;
+	u = (b->bottom() - a->top()) / rv.y;
 	return
 	rv.x>0*D/T ? rv.y>0*D/T ? r<d ? d<l ? DOWN  : NILVEC
 	                              : r<u ? RIGHT : NILVEC
@@ -57,7 +57,7 @@ Vec2<double> collision_direction (LinearRect* a, LinearRect* b) {
 }
 
 Vec2<> collision_direction (LinearRect* a, Boundary* b) {
-	Vec2<Velocity> rv = relvel(a, b, now);
+	Vec2<Velocity> rv = relvel(a, b);
 	if (rv.x == 0*D/T) {
 		if (rv.y > 0*D/T)
 			return DOWN;
@@ -73,10 +73,10 @@ Vec2<> collision_direction (LinearRect* a, Boundary* b) {
 		else return NILVEC;
 	}
 	Dim<0, 1, 0> r, d, l, u;
-	r = (b->right(now) - a->right(now))   / rv.x;
-	d = (b->bottom(now) - a->bottom(now)) / rv.y;
-	l = (b->left(now) - a->left(now))     / rv.x;
-	u = (b->top(now) - a->top(now))       / rv.y;
+	r = (b->right() - a->right())   / rv.x;
+	d = (b->bottom() - a->bottom()) / rv.y;
+	l = (b->left() - a->left())     / rv.x;
+	u = (b->top() - a->top())       / rv.y;
 	return
 	rv.x>0*D/T ? rv.y>0*D/T ? r<d ? u<r ? RIGHT : NILVEC
 	                              : l<d ? DOWN  : NILVEC
@@ -94,26 +94,26 @@ static inline Vec2<> collision_direction (Boundary* a, LinearRect* b) {
 Time on_collision (LinearRect* a, LinearRect* b) {
 	Vec2<> dir = collision_direction(a, b);
 	if (dir.x > 0)
-		return now + (b->left(now) - a->right(now)) / (a->_vel.x - b->_vel.x);
+		return now + (b->left() - a->right()) / (a->_vel.x - b->_vel.x);
 	if (dir.y > 0)
-		return now + (b->top(now) - a->bottom(now)) / (a->_vel.y - b->_vel.y);
+		return now + (b->top() - a->bottom()) / (a->_vel.y - b->_vel.y);
 	if (dir.x < 0)
-		return now + (b->right(now) - a->left(now)) / (a->_vel.x - b->_vel.x);
+		return now + (b->right() - a->left()) / (a->_vel.x - b->_vel.x);
 	if (dir.y < 0)
-		return now + (b->bottom(now) - a->top(now)) / (a->_vel.y - b->_vel.y);
+		return now + (b->bottom() - a->top()) / (a->_vel.y - b->_vel.y);
 	else return NAN*T;
 }
 
 Time on_collision (LinearRect* a, Boundary* b) {
 	Vec2<> dir = collision_direction(a, b);
 	if (dir.x > 0)
-		return now + (b->right(now) - a->right(now)) / a->_vel.x;
+		return now + (b->right() - a->right()) / a->_vel.x;
 	if (dir.y > 0)
-		return now + (b->bottom(now) - a->bottom(now)) / a->_vel.y;
+		return now + (b->bottom() - a->bottom()) / a->_vel.y;
 	if (dir.x < 0)
-		return now + (b->left(now) - a->left(now)) / a->_vel.x;
+		return now + (b->left() - a->left()) / a->_vel.x;
 	if (dir.y < 0)
-		return now + (b->top(now) - a->top(now)) / a->_vel.y;
+		return now + (b->top() - a->top()) / a->_vel.y;
 	else return NAN*T;
 }
 static inline Time on_collision (Boundary* a, LinearRect* b) {

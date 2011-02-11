@@ -17,7 +17,7 @@ inline void render (Screen* screen, Screen* b) {
 	if (room->background_color.a != 0)
 		room->background_color.draw({0*D, 0*D}, room->_size);
 	for (Object* o = first_object; o; o = o->next) {
-		o->draw(now);
+		o->draw();
 	}
 	finish_render();
 	screen->next_render = now + 1/screen->fps;

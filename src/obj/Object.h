@@ -11,7 +11,7 @@ struct Object : LL<Object> {
 
 	virtual ICID icid ();
 	virtual float depth ();
-	virtual void draw (Time t);
+	virtual void draw ();
 	virtual void create ();
 	virtual void destroy ();
 	virtual void update ();

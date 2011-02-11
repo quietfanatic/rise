@@ -5,9 +5,9 @@
 
 struct Spatial : Object {
 	Vec2<Distance> _pos;
-	virtual Vec2<Distance> pos (Time t);
-	virtual Vec2<Velocity> vel (Time t);
-	virtual Vec2<Acceleration> acc (Time t);
+	virtual Vec2<Distance> pos ();
+	virtual Vec2<Velocity> vel ();
+	virtual Vec2<Acceleration> acc ();
 	Spatial ();
 	Spatial (Vec2<Distance> pos_);
 
@@ -16,7 +16,7 @@ struct Spatial : Object {
 
 
 
-Vec2<Velocity> relvel (Spatial* a, Spatial* b, Time t);
+Vec2<Velocity> relvel (Spatial* a, Spatial* b);
 
 
 

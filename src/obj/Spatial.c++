@@ -5,9 +5,9 @@
 
 //struct Spatial : Object {
 //	Vec2<Distance> _pos;
-	Vec2<Distance> Spatial::pos (Time t) { return _pos; }
-	Vec2<Velocity> Spatial::vel (Time t) { return {0*D/T, 0*D/T}; }
-	Vec2<Acceleration> Spatial::acc (Time t) { return {0*D/T/T, 0*D/T/T}; }
+	Vec2<Distance> Spatial::pos () { return _pos; }
+	Vec2<Velocity> Spatial::vel () { return {0*D/T, 0*D/T}; }
+	Vec2<Acceleration> Spatial::acc () { return {0*D/T/T, 0*D/T/T}; }
 	Spatial::Spatial () :_pos({0*D, 0*D}) { }
 	Spatial::Spatial (Vec2<Distance> pos_) :_pos(pos_) { }
 
@@ -16,8 +16,8 @@
 
 
 
-Vec2<Velocity> relvel (Spatial* a, Spatial* b, Time t) {
-	return a->vel(t) - b->vel(t);
+Vec2<Velocity> relvel (Spatial* a, Spatial* b) {
+	return a->vel() - b->vel();
 }
 
 

@@ -6,13 +6,13 @@
 
 add_IC(Room);
 //struct Room : public Boundary {
-	Vec2<Distance> Room::size (Time t) {
+	Vec2<Distance> Room::size () {
 		return _size;
 	}
 	
 	float Room::depth () { return -INF; }
 	void Room::draw () {
-		background_color.draw({0*D, 0*D}, _size);
+	//	background_color.draw({0*D, 0*D}, _size);
 	}
 	
 	void Room::init () { }

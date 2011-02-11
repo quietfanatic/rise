@@ -9,10 +9,10 @@ struct Bouncer : LinearRect {
 	virtual Mass mass () {
 		return width * width * 1*M/D/D;
 	}
-	virtual Vec2<Distance> size (Time t) {
+	virtual Vec2<Distance> size () {
 		return {width, width};
 	}
-	virtual void draw (Time t) { color.draw(pos(t), size(t)); }
+	virtual void draw () { color.draw(pos(), size()); }
 
 	Bouncer () :
 		color(rand()),

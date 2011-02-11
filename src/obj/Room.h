@@ -7,7 +7,7 @@ struct Room : public Boundary {
 	is_IC
 	Color background_color;
 	Vec2<Distance> _size;
-	virtual Vec2<Distance> size (Time t);
+	virtual Vec2<Distance> size ();
 //	virtual Vec2<Distance> offset ();
 
 	virtual float depth ();

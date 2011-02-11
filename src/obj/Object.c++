@@ -9,7 +9,7 @@
 //struct Object : LL<Object> {
 	ICID Object::icid () { return -1; }
 	 // Draw object on screen
-	void Object::draw (Time t) { }
+	void Object::draw () { }
 	 // Depth of object
 	float Object::depth () { return 0; }
 	static bool cmp_objects (Object* a, Object* b) { return a->depth() > b->depth(); }
