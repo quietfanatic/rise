@@ -19,6 +19,8 @@ struct Interaction;
 struct Event;
 
 
+#include "util.h"
+
  // Utility types
 #include "types/ints.h"
 #include "types/Dim.h"
