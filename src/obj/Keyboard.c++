@@ -10,7 +10,11 @@ Time on_keypress (uint k) {
 	else return NAN*T;
 }
 
-
+Time on_keyrelease (uint k) {
+	if (kbd->last_key == k && !kbd->key_pressed)
+		return kbd->time;
+	else return NAN*T;
+}
 
 
 #endif

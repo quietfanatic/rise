@@ -9,6 +9,7 @@ Image Brick_image = "brick.png";
 struct Brick : public LinearRect {
 	is_IC
 	Color color;
+	virtual Mass mass () { return INF*M; }
 	virtual Vec2<Distance> size () {
 		return {32*D, 12*D};
 	}

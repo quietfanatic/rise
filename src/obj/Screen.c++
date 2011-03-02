@@ -20,7 +20,7 @@ inline void render (Screen* screen, Screen* b) {
 		o->draw();
 	}
 	finish_render();
-	DEBUGLOG("[%10.6f] Render\n", now.repr);
+	//DEBUGLOG("[%10.6f] Render\n", now.repr);
 	screen->next_render = now + 1/screen->fps;
 }
 

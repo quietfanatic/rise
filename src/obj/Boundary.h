@@ -1,19 +1,31 @@
 #ifndef _HAVE_BOUNDARY_H
 #define _HAVE_BOUNDARY_H
-#include "obj/Spatial.h"
+#include "obj/QuadraticRect.h"
 
 
 
-struct Boundary : public Spatial {
+struct Boundary : public QuadraticRect {
+	is_IC
+	Vec2<Distance> _size;
 	virtual Vec2<Distance> size ();
-	Distance right ();
-	Distance bottom ();
-	Distance left ();
-	Distance top ();
-	Boundary (Vec2<Distance>);
+	virtual Mass mass ();
 };
 
+struct Boundary_left : public Boundary {
+	is_IC
+};
 
+struct Boundary_top : public Boundary {
+	is_IC
+};
+
+struct Boundary_right : public Boundary {
+	is_IC
+};
+
+struct Boundary_bottom : public Boundary {
+	is_IC
+};
 
 
 

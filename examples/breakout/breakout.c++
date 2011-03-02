@@ -1,4 +1,4 @@
-
+#define DEBUG
 #include "rise.c++"
 #include "Brick.c++"
 #include "Paddle.c++"
@@ -10,8 +10,9 @@ Ball* ball;
 int main () {
 	rise_init();
 	now = 0*T;
-	(room = new Room)->create();
+	room = new Room;
 	room->_size = {320*D, 240*D};
+	room->create();
 	(screen = new Screen)->create();
 	screen->fps = 60/T; // Extra-smooth animation
 	//screen->fps = 0.2/T; // Test framerate-independence

@@ -31,21 +31,15 @@ void bouncer_bounce (Bouncer* a, Bouncer* b) {
 	bounce(a, b, 1.0);
 }
 
-void bouncer_edgebounce (Bouncer* a, Room* b) {
-	Vec2<> dir = collision_direction(a, b);
-	if (dir.x) {
-		a->_vel.x = -a->_vel.x;
-	}
-	if (dir.y) {
-		a->_vel.y = -a->_vel.y;
-	}
+void bouncer_edgebounce (Bouncer* a, Boundary* b) {
+	bounce(a, b, 1.0);
 }
 
 
 interaction(Bouncer, Bouncer, {
 	return on_collision(a, b) >> bouncer_bounce;
 })
-interaction(Bouncer, Room, {
+interaction(Bouncer, Boundary, {
 	return on_collision(a, b) >> bouncer_edgebounce;
 })
 

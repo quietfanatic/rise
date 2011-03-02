@@ -1,19 +1,42 @@
 #ifndef _HAVE_BOUNDARY_CPP
 #define _HAVE_BOUNDARY_CPP
-#include "obj/Spatial.c++"
 #include "obj/Boundary.h"
+#include "obj/QuadraticRect.c++"
+
+
+//struct Boundary : public QuadraticRect {
+//	is_IC
+	add_IC(Boundary)
+	Vec2<Distance> Boundary::size () { return _size; }
+	Mass Boundary::mass () { return INF*M; }
+//};
+
+//struct Boundary_left : public Boundary {
+//	is_IC
+	add_IC(Boundary_left)
+	inherit_interactions(Boundary_left, Boundary)
+//};
+
+//struct Boundary_top : public Boundary {
+//	is_IC
+	add_IC(Boundary_top)
+	inherit_interactions(Boundary_top, Boundary)
+//};
+
+//struct Boundary_right : public Boundary {
+//	is_IC
+	add_IC(Boundary_right)
+	inherit_interactions(Boundary_right, Boundary)
+//};
+
+//struct Boundary_bottom : public Boundary {
+//	is_IC
+	add_IC(Boundary_bottom)
+	inherit_interactions(Boundary_bottom, Boundary)
+//};
 
 
 
-Vec2<Distance> Boundary::size () { return {320*D, 240*D}; }
-
-inline Distance Boundary::right () { return _pos.x + size().x; }
-inline Distance Boundary::bottom () { return _pos.y + size().y; }
-inline Distance Boundary::left () { return _pos.x; }
-inline Distance Boundary::top () { return _pos.y; }
-
-
-Boundary::Boundary (Vec2<Distance> pos_) : Spatial(pos_) { }
 
 
 

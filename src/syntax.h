@@ -29,6 +29,11 @@ template <class A, class B>
 static inline Interaction itx (Time t, void(*f)(A*, B*)) {
 	return t >> f;
 }
+ // Pick earliest interaction
+static inline Interaction operator | (Interaction a, Interaction b) {
+	if (a.t != a.t || a.t > b.t) return b;
+	return a;
+}
 
 #define nointeraction ((Interaction){NAN*T, NULL, NULL})
 

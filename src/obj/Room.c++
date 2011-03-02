@@ -5,7 +5,7 @@
 #include "obj/Boundary.c++"
 
 add_IC(Room);
-//struct Room : public Boundary {
+//struct Room : public LinearRect {
 	Vec2<Distance> Room::size () {
 		return _size;
 	}
@@ -19,6 +19,15 @@ add_IC(Room);
 
 	void Room::create () {
 		Object::create();
+		Boundary* b;
+		b = new Boundary_left; b->_size.y = _size.y; b->_size.x = 0*D; b->create();
+		//printf("Boundary left: %p\n", b);
+		b = new Boundary_top; b->_size.x = _size.x; b->_size.y = 0*D; b->_pos = NILVEC*D; b->create();
+		//printf("Boundary top: %p\n", b);
+		b = new Boundary_right; b->_size.y = _size.y; b->_pos.x = _size.x; b->create();
+		//printf("Boundary right: %p\n", b);
+		b = new Boundary_bottom; b->_size.x = _size.x; b->_pos.y = _size.y; b->create();
+		//printf("Boundary bottom: %p\n", b);
 		init();
 	}
 	void Room::destroy () {
@@ -28,9 +37,9 @@ add_IC(Room);
 		Object::destroy();
 	}
 
-	Room::Room () : Boundary({0*D, 0*D}),
-	          _size({640*D, 480*D}),
-			  background_color(Color(0x000000)) { }
+	Room::Room () :
+		_size({640*D, 480*D}),
+		background_color(Color(0x000000)) { }
 //};
 
 

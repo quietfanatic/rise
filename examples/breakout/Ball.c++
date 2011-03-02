@@ -33,16 +33,11 @@ struct Ball : public LinearRect {
 add_IC(Ball)
 
 
-void bounce_x (Ball* ball, Object* room) {
-	ball->_vel.x = -ball->_vel.x;
-}
-void bounce_y (Ball* ball, Object* room) {
-	ball->_vel.y = -ball->_vel.y;
+void bounce_boundary (Ball* ball, Boundary* b) {
+	bounce(ball, b, 1.0);
 }
 void hit_brick (Ball* ball, Brick* brick) {
-	Vec2<> dir = collision_direction(ball, brick);
-	if (dir.x) ball->_vel.x = -ball->_vel.x;
-	if (dir.y) ball->_vel.y = -ball->_vel.y;
+	bounce(ball, brick, 1.0);
 	brick->destroy();
 }
 
@@ -53,10 +48,10 @@ void bounce_paddle (Ball* ball, Paddle* paddle) {
 	if (ball->_vel.x < -240*D/T) ball->_vel.x = -240*D/T;
 }
 
-void kill_ball (Ball* ball, Room* room) {
+void kill_ball (Ball* ball, Boundary* room) {
 	ball->alive = false;
 }
-void start_ball (Ball* ball, Room* room) {
+void start_ball (Ball* ball, Boundary* room) {
 	ball->alive = true;
 	ball->_vel = {90*D/T, -90*D/T};
 }
@@ -68,15 +63,11 @@ interaction(Ball, Brick, {
 	return nointeraction;
 })
 
-interaction(Ball, Room, {
-	if (a->alive) {
-		Vec2<> dir = collision_direction(a, b);
-		Time t = on_collision(a, b);
-		if (dir.x) return t >> bounce_x;
-		if (dir.y < 0) return t >> bounce_y;
-		if (dir.y > 0) return t+(6*D/a->_vel.y) >> kill_ball;
-	}
-	return nointeraction;
+interaction(Ball, Boundary, {
+	return on_collision(a, b) >> bounce_boundary;
+})
+interaction(Ball, Boundary_bottom, {
+	return on_collision(a, b) + (6*D/a->vel().y) >> kill_ball;
 })
 
 

@@ -32,19 +32,15 @@ void stop_paddle(Paddle* a, Object* b) {
 
 
 interaction(Paddle, Keyboard, {
-	if (kbd->key[SDLK_RIGHT]) {
-		if (kbd->key[SDLK_LEFT])
-			return kbd->time >> stop_paddle;
-		else return kbd->time >> move_paddle_right;
-	}
-	if (kbd->key[SDLK_LEFT])
-		return kbd->time >> move_paddle_left;
-	return kbd->time >> stop_paddle;
+	return on_keypress(SDLK_RIGHT) >> move_paddle_right
+	     | on_keypress(SDLK_LEFT) >> move_paddle_left
+	     | on_keyrelease(SDLK_RIGHT) >> stop_paddle
+	     | on_keyrelease(SDLK_LEFT) >> stop_paddle;
 })
 
 
-interaction(Paddle, Room, {
-	return on_collision(a, b) >> &stop_paddle;
+interaction(Paddle, Boundary, {
+	return on_collision(a, b) >> stop_paddle;
 })
 
 

@@ -3,7 +3,7 @@
 
 #include "obj/Boundary.h"
 
-struct Room : public Boundary {
+struct Room : public LinearRect {
 	is_IC
 	Color background_color;
 	Vec2<Distance> _size;

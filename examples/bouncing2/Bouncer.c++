@@ -17,7 +17,7 @@ struct Bouncer : QuadraticRect {
 	Bouncer () :
 		color(rand()),
 		//color(0xff, 0xff, 0xff),
-		width(rand()*1.0*rand()/RAND_MAX/RAND_MAX * 30*D + 2*D) {
+		width(rand()*1.0*rand()/RAND_MAX/RAND_MAX * 60*D + 4*D) {
 		_pos = {rand()*1.0/RAND_MAX * 900*D - width,
 		        rand()*1.0/RAND_MAX * 900*D - width};
 		_vel = {rand()*1.0/RAND_MAX * 600*D/T - 300*D/T,
@@ -34,14 +34,8 @@ void bouncer_bounce (Bouncer* a, Bouncer* b) {
 	bounce(a, b, 1.0);
 }
 
-void bouncer_edgebounce (Bouncer* a, Room* b) {
-	Vec2<> dir = collision_direction(a, b);
-	if (dir.x) {
-		a->_vel.x = -a->_vel.x;
-	}
-	if (dir.y) {
-		a->_vel.y = -a->_vel.y;
-	}
+void bouncer_edgebounce (Bouncer* a, Boundary* b) {
+	bounce(a, b, 1.0);
 }
 
 
@@ -50,9 +44,11 @@ interaction(Bouncer, Bouncer, {
 	//if (r.t == r.t) printf("Time between %p & %p: %f\n", a, b, r.t.repr);
 	return r;
 })
-//interaction(Bouncer, Room, {
-//	return on_collision(a, b) >> bouncer_edgebounce;
-//})
+interaction(Bouncer, Boundary, {
+	auto r = on_collision(a, b) >> bouncer_edgebounce;
+	//if (r.t == r.t) printf("Time between %p & %p: %f\n", a, b, r.t.repr);
+	return r;
+})
 
 
 
