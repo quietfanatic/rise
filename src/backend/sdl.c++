@@ -1,5 +1,5 @@
-#ifndef _HAVE_BACKEND_SDL_CPP
-#define _HAVE_BACKEND_SDL_CPP
+#ifndef _RISE_BACKEND_SDL_CPP
+#define _RISE_BACKEND_SDL_CPP
 
 
 #include "backend/sdl.h"

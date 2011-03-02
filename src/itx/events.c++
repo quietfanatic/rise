@@ -1,6 +1,5 @@
-#ifndef _HAVE_EVENTS_CPP
-#define _HAVE_EVENTS_CPP
-#include "obj/Screen.c++"
+#ifndef _RISE_ITX_EVENTS_CPP
+#define _RISE_ITX_EVENTS_CPP
 
 //struct Event : gc, LL<Event>, Interaction {
 //	Object* a;
@@ -8,7 +7,7 @@
 
 	void Event::happen () {
 		if (a != screen)
-			DEBUGLOG("[%10.6f]   ITX: %p & %p @ %10.6f\n", now.repr, a, b, t.repr);
+			DBG(5, "[%10.6f]   ITX: %p & %p @ %10.6f\n", now.repr, a, b, t.repr);
 		a->update();
 		b->update();
 		(*wrap)(call, a, b);
@@ -96,7 +95,7 @@ void check_interactions(Object* a) {
 	}
 	if (picked) {
 		if (a != screen)
-			DEBUGLOG("[%10.6f] ADD  : %p & %p @ %10.6f\n", now.repr, a, picked, newfuture->t.repr);
+			DBG(6, "[%10.6f] ADD  : %p & %p @ %10.6f\n", now.repr, a, picked, newfuture->t.repr);
 		Event* of = picked->future;
 
 		a->future = newfuture;
@@ -104,7 +103,7 @@ void check_interactions(Object* a) {
 		newfuture->schedule();
 
 		if (of != NULL) {
-			DEBUGLOG("[%10.6f]  CAN : %p & %p @ %10.6f\n", now.repr, of->a, of->b, of->t.repr);
+			DBG(6, "[%10.6f]  CAN : %p & %p @ %10.6f\n", now.repr, of->a, of->b, of->t.repr);
 			 // Cancel the other object's future.
 			 // And recalculate other futures if needed.
 			of->unschedule();

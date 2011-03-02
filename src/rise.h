@@ -1,14 +1,16 @@
-#ifndef _HAVE_RISE_H
-#define _HAVE_RISE_H
+#ifndef _RISE_RISE_H
+#define _RISE_RISE_H
 
  // Debug control
 #ifdef DEBUG
 #define DEBUGLOG(...) printf(__VA_ARGS__)
+#define DBG(level, ...) if (DEBUG >= level) printf(__VA_ARGS__);
 #else
 #define DEBUGLOG(...)
+#define DBG(level, ...)
 #endif
 
-
+ // External
 #include <stdio.h>
 #include <gc/gc.h>
 #include <gc/gc_cpp.h>
@@ -16,10 +18,11 @@
  // Necessary predecls
 struct Object;
 struct Interaction;
+struct Relation;
 struct Event;
 
 
-#include "util.h"
+#include "misc/util.h"
 
  // Utility types
 #include "types/ints.h"
@@ -36,19 +39,13 @@ struct Event;
 #endif
 
 
- // Various stuff
-#include "interactions.h"
-#include "syntax.h"
-#include "events.h"
-
- // Required object types
+ // Everything else
+#include "itx/interactions.h"
+#include "itx/events.h"
 #include "obj/Object.h"
 #include "obj/Screen.h"
 #include "obj/Keyboard.h"
 #include "obj/Room.h"
-
-
- // Global things
 #include "globals.h"
 
 

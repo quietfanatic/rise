@@ -1,5 +1,5 @@
-#ifndef _HAVE_GLOBALS_H
-#define _HAVE_GLOBALS_H
+#ifndef _RISE_GLOBALS_H
+#define _RISE_GLOBALS_H
 
 
 

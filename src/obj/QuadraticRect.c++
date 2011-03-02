@@ -68,20 +68,18 @@ Time on_collision (QuadraticRect* a, QuadraticRect* b) {
 		vt1 = dta; vt2 = uta;
 		vt3 = utb; vt4 = dtb;
 	}
-	/*
-	printf("===stats for %p and %p===\n", a, b);
-	printf("pos: %f,%f & %f,%f\n", a->pos().x.repr, a->pos().y.repr, b->pos().x.repr, b->pos().y.repr);
-	printf("vel: %f,%f & %f,%f\n", a->vel().x.repr, a->vel().y.repr, b->vel().x.repr, b->vel().y.repr);
-	printf("acc: %f,%f & %f,%f\n", a->acc().x.repr, a->acc().y.repr, b->acc().x.repr, b->acc().y.repr);
-	printf("ht1: %f\n", ht1.repr);
-	printf("ht2: %f\n", ht2.repr);
-	printf("ht3: %f\n", ht3.repr);
-	printf("ht4: %f\n", ht4.repr);
-	printf("vt1: %f\n", vt1.repr);
-	printf("vt2: %f\n", vt2.repr);
-	printf("vt3: %f\n", vt3.repr);
-	printf("vt4: %f\n", vt4.repr);
-	*/
+	DBG(9, "===stats for %p and %p===\n", a, b);
+	DBG(9, "pos: %f,%f & %f,%f\n", a->pos().x.repr, a->pos().y.repr, b->pos().x.repr, b->pos().y.repr);
+	DBG(9, "vel: %f,%f & %f,%f\n", a->vel().x.repr, a->vel().y.repr, b->vel().x.repr, b->vel().y.repr);
+	DBG(9, "acc: %f,%f & %f,%f\n", a->acc().x.repr, a->acc().y.repr, b->acc().x.repr, b->acc().y.repr);
+	DBG(9, "ht1: %f\n", ht1.repr);
+	DBG(9, "ht2: %f\n", ht2.repr);
+	DBG(9, "ht3: %f\n", ht3.repr);
+	DBG(9, "ht4: %f\n", ht4.repr);
+	DBG(9, "vt1: %f\n", vt1.repr);
+	DBG(9, "vt2: %f\n", vt2.repr);
+	DBG(9, "vt3: %f\n", vt3.repr);
+	DBG(9, "vt4: %f\n", vt4.repr);
 	if (ht1 != ht1 || vt1 != vt1) return NAN*T;
 	if (ht1 < vt1) {
 		if (vt1 < 0*T) goto secondpass;

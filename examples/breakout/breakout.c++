@@ -1,4 +1,4 @@
-#define DEBUG
+#define DEBUG 6
 #include "rise.c++"
 #include "Brick.c++"
 #include "Paddle.c++"

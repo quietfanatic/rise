@@ -1,5 +1,5 @@
-#ifndef _HAVE_INTERACTIONS_CPP
-#define _HAVE_INTERACTIONS_CPP
+#ifndef _RISE_ITX_INTERACTIONS_CPP
+#define _RISE_ITX_INTERACTIONS_CPP
 
 
  // Registering classes

@@ -1,5 +1,5 @@
-#ifndef _HAVE_BACKEND_SDL_OPENGL_CPP
-#define _HAVE_BACKEND_SDL_OPENGL_CPP
+#ifndef _RISE_BACKEND_SDL_OPENGL_CPP
+#define _RISE_BACKEND_SDL_OPENGL_CPP
 
 
 #include "backend/sdl-opengl.h"

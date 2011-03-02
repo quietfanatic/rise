@@ -1,5 +1,5 @@
-#ifndef _HAVE_UTIL_H
-#define _HAVE_UTIL_H
+#ifndef RISE_MISC_UTIL_H
+#define RISE_MISC_UTIL_H
 
 
 

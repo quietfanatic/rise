@@ -1,5 +1,5 @@
-#ifndef _HAVE_BACKEND_SDL_H
-#define _HAVE_BACKEND_SDL_H
+#ifndef _RISE_BACKEND_SDL_H
+#define _RISE_BACKEND_SDL_H
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
